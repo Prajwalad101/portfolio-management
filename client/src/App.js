@@ -1,17 +1,9 @@
-import { useState, useEffect } from 'react';
+import AddStock from './components/AddStock';
 
 function App() {
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    fetch('/api')
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
   return (
-    <div className="text-3xl">
-      <p>{!data ? 'Loading...' : data}</p>
+    <div className="flex justify-center h-screen ">
+      <AddStock />
     </div>
   );
 }
