@@ -34,7 +34,7 @@ function App() {
           {stocks.length !== 0 ? (
             <StockList stocks={stocks} />
           ) : (
-            <div>No stocks added</div>
+            <div className="text-xl">No transactions yet</div>
           )}
         </div>
       )}

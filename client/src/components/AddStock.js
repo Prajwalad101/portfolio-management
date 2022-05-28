@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import addStock from '../utils/addstock';
+import deleteStock from '../utils/deleteStock';
 
 export default function AddStock({ companies, setStocks, stocks }) {
   const [boughtStocks, setBoughtStocks] = useState([]);
@@ -13,7 +15,7 @@ export default function AddStock({ companies, setStocks, stocks }) {
     setBoughtStocks(boughtStocks);
   }, [stocks]);
 
-  const addStock = async () => {
+  const handler = () => {
     if (unitPrice <= 0 || numStocks <= 0) {
       return;
     }
@@ -23,35 +25,10 @@ export default function AddStock({ companies, setStocks, stocks }) {
       type,
       quantity: numStocks,
     };
+    addStock(stock, type, stocks, setIsValid, setStocks);
 
-    const stocksArr = stocks.map((stock) => stock.name);
-
-    if (stocksArr.indexOf(stock.name) !== -1 && type === 'sell') {
-      setIsValid(false);
-    } else {
-      setIsValid(true);
-      return;
-    }
-
-    try {
-      const res = await fetch('http://localhost:3001/api/stock', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(stock),
-      });
-
-      if (res.ok) {
-        console.log('success');
-      } else {
-        console.log('error');
-      }
-
-      const data = await res.json();
-      setStocks([...stocks, data.data]);
-    } catch (error) {
-      console.log('error');
+    if (type === 'sell') {
+      deleteStock(stocks, stock, setStocks);
     }
   };
 
@@ -112,7 +89,7 @@ export default function AddStock({ companies, setStocks, stocks }) {
         <button
           type="submit"
           className="bg-blue-500 text-white px-16 py-2 rounded-md hover:bg-blue-700"
-          onClick={addStock}
+          onClick={handler}
         >
           Add
         </button>

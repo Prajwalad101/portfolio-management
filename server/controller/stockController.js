@@ -53,7 +53,22 @@ const createStock = async (req, res) => {
       data: newStock,
     });
   } catch (error) {
-    // console.log(err);
+    console.log(error);
+    res.status(400).json({
+      status: 'error',
+      message: error,
+    });
+  }
+};
+
+const deleteStock = async (req, res) => {
+  const name = req.body.name;
+  const type = req.body.type;
+  try {
+    await Stock.deleteOne({ name, type: 'buy' });
+    res.status(500).json({});
+  } catch (error) {
+    console.log(error);
     res.status(400).json({
       status: 'error',
       message: error,
@@ -65,4 +80,5 @@ module.exports = {
   createStock,
   getAllCompanies,
   getAllStocks,
+  deleteStock,
 };
