@@ -23,7 +23,7 @@ const getAllCompanies = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       status: 'success',
-      message: 'An error occurred',
+      message: error,
     });
   }
 };
@@ -36,10 +36,10 @@ const getAllStocks = async (req, res) => {
       status: 'success',
       data: stocks,
     });
-  } catch (err) {
+  } catch (error) {
     res.status(400).json({
       status: 'error',
-      data: 'Cannot get all stocks',
+      message: error,
     });
   }
 };
@@ -52,11 +52,11 @@ const createStock = async (req, res) => {
       status: 'success',
       data: newStock,
     });
-  } catch (err) {
+  } catch (error) {
     // console.log(err);
     res.status(400).json({
       status: 'error',
-      message: 'error occurred',
+      message: error,
     });
   }
 };

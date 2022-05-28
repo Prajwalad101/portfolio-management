@@ -1,22 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function AddStock({ companies, setStocks, stocks }) {
+  const [boughtStocks, setBoughtStocks] = useState([]);
   const [numStocks, setNumStocks] = useState(10);
   const [unitPrice, setUnitPrice] = useState(100);
   const [type, setType] = useState('buy');
-  const [stockName, setStockName] = useState(companies[0].name);
+  const [companyName, setCompanyName] = useState(companies[0].name);
   const [isValid, setIsValid] = useState(true);
 
-  const currentStock = companies.filter(
-    (company) => company.name === stockName
-  );
+  useEffect(() => {
+    const boughtStocks = stocks.filter((stock) => stock.type === 'buy');
+    setBoughtStocks(boughtStocks);
+  }, [stocks]);
 
   const addStock = async () => {
     if (unitPrice <= 0 || numStocks <= 0) {
       return;
     }
     const stock = {
-      name: stockName,
+      name: companyName,
       unitPrice,
       type,
       quantity: numStocks,
@@ -24,10 +26,10 @@ export default function AddStock({ companies, setStocks, stocks }) {
 
     const stocksArr = stocks.map((stock) => stock.name);
 
-    if (stocksArr.indexOf(stock.name) === -1) {
-      setIsValid(true);
-    } else {
+    if (stocksArr.indexOf(stock.name) !== -1 && type === 'sell') {
       setIsValid(false);
+    } else {
+      setIsValid(true);
       return;
     }
 
@@ -53,6 +55,8 @@ export default function AddStock({ companies, setStocks, stocks }) {
     }
   };
 
+  const stocksForTransaction = type === 'buy' ? companies : boughtStocks;
+
   return (
     <div className="w-[500px]">
       {/* STOCK NAME */}
@@ -61,11 +65,11 @@ export default function AddStock({ companies, setStocks, stocks }) {
         <select
           className="p-2 rounded-md border-2 border-gray-400"
           onChange={(e) => {
-            setStockName(e.target.value);
+            setCompanyName(e.target.value);
           }}
-          value={stockName}
+          value={companyName}
         >
-          {companies.map((stock) => (
+          {stocksForTransaction.map((stock) => (
             <option value={stock.name} key={stock._id}>
               {stock.name}
             </option>
@@ -103,9 +107,6 @@ export default function AddStock({ companies, setStocks, stocks }) {
           onChange={(e) => setUnitPrice(e.target.value)}
           value={unitPrice}
         />
-      </div>
-      <div className="mb-10 text-gray-800 font-semibold">
-        <p className="mb-3">Current Market Price: {currentStock[0].price}</p>
       </div>
       <div>
         <button
