@@ -5,10 +5,16 @@ export default function AddStock({ companies, setStocks, stocks }) {
   const [unitPrice, setUnitPrice] = useState(100);
   const [type, setType] = useState('buy');
   const [stockName, setStockName] = useState(companies[0].name);
-
   const [isValid, setIsValid] = useState(true);
 
+  const currentStock = companies.filter(
+    (company) => company.name === stockName
+  );
+
   const addStock = async () => {
+    if (unitPrice <= 0 || numStocks <= 0) {
+      return;
+    }
     const stock = {
       name: stockName,
       unitPrice,
@@ -42,7 +48,6 @@ export default function AddStock({ companies, setStocks, stocks }) {
 
       const data = await res.json();
       setStocks([...stocks, data.data]);
-      console.log(data);
     } catch (error) {
       console.log('error');
     }
@@ -54,8 +59,10 @@ export default function AddStock({ companies, setStocks, stocks }) {
       <div className="flex gap-7 items-center mb-5">
         <p>Stock Name:</p>
         <select
-          className="p-2 rounded-md"
-          onChange={(e) => setStockName(e.target.value)}
+          className="p-2 rounded-md border-2 border-gray-400"
+          onChange={(e) => {
+            setStockName(e.target.value);
+          }}
           value={stockName}
         >
           {companies.map((stock) => (
@@ -69,7 +76,7 @@ export default function AddStock({ companies, setStocks, stocks }) {
       <div className="flex gap-20 items-center mb-5">
         <p>Type:</p>
         <select
-          className="p-2 rounded-md"
+          className="p-2 rounded-md border-2 border-gray-400"
           onChange={(e) => setType(e.target.value)}
           value={type}
         >
@@ -82,12 +89,13 @@ export default function AddStock({ companies, setStocks, stocks }) {
         <p>Stock quantity:</p>
         <input
           type="number"
+          required
           className="border-2 border-gray-400 rounded-md h-9 px-2"
           onChange={(e) => setNumStocks(e.target.value)}
           value={numStocks}
         />
       </div>
-      <div className="flex gap-5 items-center mb-16">
+      <div className="flex gap-5 items-center mb-14">
         <p>Price per unit:</p>
         <input
           type="number"
@@ -96,9 +104,13 @@ export default function AddStock({ companies, setStocks, stocks }) {
           value={unitPrice}
         />
       </div>
+      <div className="mb-10 text-gray-800 font-semibold">
+        <p className="mb-3">Current Market Price: {currentStock[0].price}</p>
+      </div>
       <div>
         <button
-          className="bg-blue-500 text-white px-10 py-2 rounded-md hover:bg-blue-700"
+          type="submit"
+          className="bg-blue-500 text-white px-16 py-2 rounded-md hover:bg-blue-700"
           onClick={addStock}
         >
           Add
