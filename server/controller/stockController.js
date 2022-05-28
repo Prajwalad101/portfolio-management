@@ -14,7 +14,7 @@ const getAllCompanies = async (req, res) => {
     const cursor = companiesCollection.find();
     const docs = await cursor.toArray();
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       data: docs,
     });
@@ -32,7 +32,7 @@ const getAllStocks = async (req, res) => {
   try {
     const stocks = await Stock.find();
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       data: stocks,
     });
@@ -48,7 +48,7 @@ const createStock = async (req, res) => {
   try {
     const newStock = await Stock.create(req.body);
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       data: newStock,
     });
@@ -66,7 +66,7 @@ const deleteStock = async (req, res) => {
   const type = req.body.type;
   try {
     await Stock.deleteOne({ name, type: 'buy' });
-    res.status(500).json({});
+    res.status(204).json({});
   } catch (error) {
     console.log(error);
     res.status(400).json({
