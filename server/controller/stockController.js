@@ -28,6 +28,22 @@ const getAllCompanies = async (req, res) => {
   }
 };
 
+const getAllStocks = async (req, res) => {
+  try {
+    const stocks = await Stock.find();
+
+    res.status(200).json({
+      status: 'success',
+      data: stocks,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'error',
+      data: 'Cannot get all stocks',
+    });
+  }
+};
+
 const createStock = async (req, res) => {
   try {
     const newStock = await Stock.create(req.body);
@@ -48,4 +64,5 @@ const createStock = async (req, res) => {
 module.exports = {
   createStock,
   getAllCompanies,
+  getAllStocks,
 };

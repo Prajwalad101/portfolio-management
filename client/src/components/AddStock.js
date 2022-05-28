@@ -37,7 +37,7 @@ export default function AddStock({ companies }) {
   };
 
   return (
-    <div className="mt-10">
+    <div>
       {/* STOCK NAME */}
       <div className="flex gap-7 items-center mb-5">
         <p>Stock Name:</p>
@@ -47,7 +47,7 @@ export default function AddStock({ companies }) {
           value={stockName}
         >
           {companies.map((stock) => (
-            <option value={stock.name} key={stock.id}>
+            <option value={stock.name} key={stock._id}>
               {stock.name}
             </option>
           ))}
