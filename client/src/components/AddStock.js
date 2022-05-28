@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function AddStock({ companies }) {
+export default function AddStock({ companies, setStocks, stocks }) {
   const [numStocks, setNumStocks] = useState(10);
   const [unitPrice, setUnitPrice] = useState(100);
   const [type, setType] = useState('buy');
@@ -30,6 +30,7 @@ export default function AddStock({ companies }) {
       }
 
       const data = await res.json();
+      setStocks([...stocks, data.data]);
       console.log(data);
     } catch (error) {
       console.log('error');
@@ -37,7 +38,7 @@ export default function AddStock({ companies }) {
   };
 
   return (
-    <div>
+    <div className="w-[500px]">
       {/* STOCK NAME */}
       <div className="flex gap-7 items-center mb-5">
         <p>Stock Name:</p>

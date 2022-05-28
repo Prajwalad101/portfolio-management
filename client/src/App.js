@@ -10,15 +10,15 @@ function App() {
   const [stocks, setStocks] = useState([]);
 
   useCompanies(setCompanies);
-  useStocks(setStocks);
+  useStocks(setStocks, stocks);
 
   if (!companies[0] || !stocks[0]) {
     return null;
   }
 
   return (
-    <div className="flex justify-center gap-20 h-screen pt-10 mx-10  ">
-      <AddStock companies={companies} />
+    <div className="flex  gap-10 h-screen pt-10 mx-10  ">
+      <AddStock companies={companies} setStocks={setStocks} stocks={stocks} />
       <div className="border-l-2"></div>
       <StockList stocks={stocks} />
     </div>
