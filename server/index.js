@@ -1,9 +1,8 @@
-const express = require('express');
 const mongoose = require('mongoose');
 
 const PORT = process.env.PORT || 3001;
 
-const app = express();
+const app = require('./app');
 
 mongoose
   .connect(
@@ -13,16 +12,6 @@ mongoose
     console.log('DB connection successful');
   })
   .catch((err) => console.log('Error while connecting to the database'));
-
-app.get('/api', (req, res) => {
-  res.json({ message: 'Hello from server!' });
-});
-
-app.post('/api/stock', (req, res) => {
-  res.status(200).json({
-    status: 'success',
-  });
-});
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);

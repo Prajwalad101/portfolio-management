@@ -13,6 +13,7 @@ const stockSchema = new mongoose.Schema({
   type: {
     type: String,
     required: [true, 'A stock must have a type'],
+    lowercase: true,
   },
   quantity: {
     type: Number,

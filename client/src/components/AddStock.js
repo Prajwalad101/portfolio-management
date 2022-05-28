@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function AddStock() {
   const stocks = [
@@ -26,20 +26,25 @@ export default function AddStock() {
   const [numStocks, setNumStocks] = useState(10);
   const [unitPrice, setUnitPrice] = useState(100);
   const [type, setType] = useState('buy');
-  const [stockName, setStockName] = useState(stocks[0]);
+  const [stockName, setStockName] = useState(stocks[0].name);
 
   const addStock = async () => {
     const stock = {
       name: stockName,
       unitPrice,
       type,
-      numStocks,
+      quantity: numStocks,
     };
 
+    console.log(stock);
+
     try {
-      const res = await fetch('/api/stock', {
+      const res = await fetch('http://localhost:3001/api/stock', {
         method: 'POST',
-        body: stock,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(stock),
       });
 
       if (res.ok) {
@@ -48,20 +53,11 @@ export default function AddStock() {
         console.log('error');
       }
 
-      const data = res.json();
+      const data = await res.json();
+      console.log(data);
     } catch (error) {
       console.log('error');
     }
-
-    // .then((res) => {
-    //   if (res.ok) {
-    //     console.log('Success');
-    //   } else {
-    //     console.log('ERROR');
-    //   }
-    // })
-    // .then((data) => console.log(data))
-    // .catch((error) => console.log('ERROR'));
   };
 
   return (
@@ -113,7 +109,10 @@ export default function AddStock() {
         />
       </div>
       <div>
-        <button className="bg-blue-500 text-white px-10 py-2 rounded-md hover:bg-blue-700">
+        <button
+          className="bg-blue-500 text-white px-10 py-2 rounded-md hover:bg-blue-700"
+          onClick={addStock}
+        >
           Add
         </button>
       </div>
