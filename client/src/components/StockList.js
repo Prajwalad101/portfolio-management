@@ -13,7 +13,7 @@ export default function StockList({ stocks }) {
           </tr>
         </thead>
         <tbody>
-          {stocks.map((stock) => {
+          {stocks.map((stock, i) => {
             const date = new Date(stock.createdAt);
             const year = date.getFullYear();
             const month = date.getMonth() + 1;
@@ -21,7 +21,7 @@ export default function StockList({ stocks }) {
 
             return (
               <tr key={stock._id}>
-                <td className="border px-5 py-2">1</td>
+                <td className="border px-5 py-2">{i + 1}</td>
                 <td className="border px-5 py-2">{stock.name}</td>
                 <td className="border px-5 py-2">{stock.type}</td>
                 <td className="border px-5 py-2">{stock.quantity}</td>

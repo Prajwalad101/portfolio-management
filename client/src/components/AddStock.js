@@ -6,6 +6,8 @@ export default function AddStock({ companies, setStocks, stocks }) {
   const [type, setType] = useState('buy');
   const [stockName, setStockName] = useState(companies[0].name);
 
+  const [isValid, setIsValid] = useState(true);
+
   const addStock = async () => {
     const stock = {
       name: stockName,
@@ -13,6 +15,15 @@ export default function AddStock({ companies, setStocks, stocks }) {
       type,
       quantity: numStocks,
     };
+
+    const stocksArr = stocks.map((stock) => stock.name);
+
+    if (stocksArr.indexOf(stock.name) === -1) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+      return;
+    }
 
     try {
       const res = await fetch('http://localhost:3001/api/stock', {
@@ -93,6 +104,11 @@ export default function AddStock({ companies, setStocks, stocks }) {
           Add
         </button>
       </div>
+      {!isValid && (
+        <p className="mt-5 text-red-500">
+          The stock already exists. Please try adding other stocks.
+        </p>
+      )}
     </div>
   );
 }
