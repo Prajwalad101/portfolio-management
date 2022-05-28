@@ -1,32 +1,10 @@
 import { useState } from 'react';
 
-export default function AddStock() {
-  const stocks = [
-    {
-      name: 'Standard Charted Bank',
-      id: 1,
-    },
-    {
-      name: 'Nabil Bank',
-      id: 2,
-    },
-    {
-      name: 'Unilever Nepal Limited',
-      id: 3,
-    },
-    {
-      name: 'Rastriya Beema Company Limited',
-      id: 4,
-    },
-    {
-      name: 'Bottlers Nepal Terai Limited',
-      id: 5,
-    },
-  ];
+export default function AddStock({ companies }) {
   const [numStocks, setNumStocks] = useState(10);
   const [unitPrice, setUnitPrice] = useState(100);
   const [type, setType] = useState('buy');
-  const [stockName, setStockName] = useState(stocks[0].name);
+  const [stockName, setStockName] = useState(companies[0].name);
 
   const addStock = async () => {
     const stock = {
@@ -35,8 +13,6 @@ export default function AddStock() {
       type,
       quantity: numStocks,
     };
-
-    console.log(stock);
 
     try {
       const res = await fetch('http://localhost:3001/api/stock', {
@@ -70,7 +46,7 @@ export default function AddStock() {
           onChange={(e) => setStockName(e.target.value)}
           value={stockName}
         >
-          {stocks.map((stock) => (
+          {companies.map((stock) => (
             <option value={stock.name} key={stock.id}>
               {stock.name}
             </option>

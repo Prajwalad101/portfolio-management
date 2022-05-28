@@ -4,7 +4,7 @@ function useCompanies(setCompanies) {
   useEffect(() => {
     fetch('http://localhost:3001/api/companies')
       .then((res) => res.json())
-      .then((data) => setCompanies(data));
+      .then((data) => setCompanies(data?.data));
   }, [setCompanies]);
 }
 
