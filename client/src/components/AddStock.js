@@ -12,8 +12,11 @@ export default function AddStock({ companies, setStocks, stocks }) {
 
   useEffect(() => {
     const boughtStocks = stocks.filter((stock) => stock.type === 'buy');
+    if (type === 'sell' && boughtStocks[0]) {
+      setCompanyName(boughtStocks[0].name);
+    }
     setBoughtStocks(boughtStocks);
-  }, [stocks]);
+  }, [stocks, type]);
 
   const handler = () => {
     if (unitPrice <= 0 || numStocks <= 0) {

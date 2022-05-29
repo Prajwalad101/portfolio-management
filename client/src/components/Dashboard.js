@@ -53,7 +53,8 @@ export default function Dashboard({ stocks, companies, setStocks }) {
 
         pl = stock.quantity * sellRate - stock.quantity * stock.unitPrice;
 
-        totalInvestment += stock.quantity * stock.unitPrice;
+        const investment = stock.quantity * stock.unitPrice;
+        // totalInvestment += stock.quantity * stock.unitPrice;
         return (
           <div className="mb-5" key={stock._id}>
             <div className="border-2 w-full  border-gray-500"></div>
@@ -64,6 +65,7 @@ export default function Dashboard({ stocks, companies, setStocks }) {
               Overall <span>{pl < 0 ? 'Loss' : 'Profit'} (when sold):</span>{' '}
               {Math.abs(pl)}
             </p>
+            <p className="text-lg">Investment: {investment}</p>
           </div>
         );
       })}

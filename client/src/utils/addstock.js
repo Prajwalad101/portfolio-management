@@ -32,7 +32,15 @@ export default async function addStock(
     }
 
     const data = await res.json();
-    setStocks([...stocks, data.data]);
+
+    if (type === 'sell') {
+      const newStocks = stocks.filter((stk) => stk.name !== stock.name);
+      setStocks([...newStocks, data.data]);
+    } else {
+      setStocks([...stocks, data.data]);
+    }
+
+    // setStocks(newStocks);
   } catch (error) {
     console.log('error');
   }
