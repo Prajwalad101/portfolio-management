@@ -14,7 +14,7 @@ export default async function deleteStock(stocks, stock, setStocks) {
     return;
   }
 
-  const newStocks = stocks.filter((stk) => stk.name !== stock.name);
+  // const newStocks = stocks.filter((stk) => stk.name !== stock.name);
 
-  setStocks(newStocks);
+  // setStocks(newStocks);
 }

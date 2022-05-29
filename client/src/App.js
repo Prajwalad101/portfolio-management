@@ -5,7 +5,7 @@ import { useState } from 'react';
 import StockList from './components/StockList';
 import useStocks from './hooks/useStocks';
 import Tab from './components/Tab';
-import Dashboard from './components/Dasboard';
+import Dashboard from './components/Dashboard';
 
 function App() {
   const [companies, setCompanies] = useState(null);
@@ -14,7 +14,7 @@ function App() {
   const [selected, setSelected] = useState('portfolio');
 
   useCompanies(setCompanies);
-  useStocks(setStocks, stocks);
+  useStocks(setStocks);
 
   if (!companies || !stocks) {
     return null;
@@ -39,7 +39,11 @@ function App() {
         </div>
       )}
       {selected === 'dashboard' && (
-        <Dashboard stocks={stocks} companies={companies} />
+        <Dashboard
+          stocks={stocks}
+          companies={companies}
+          setStocks={setStocks}
+        />
       )}
     </div>
   );

@@ -33,6 +33,9 @@ export default function AddStock({ companies, setStocks, stocks }) {
   };
 
   const stocksForTransaction = type === 'buy' ? companies : boughtStocks;
+  const company = companies.filter(
+    (company) => company.name === companyName
+  )[0];
 
   return (
     <div className="w-[500px]">
@@ -84,6 +87,9 @@ export default function AddStock({ companies, setStocks, stocks }) {
           onChange={(e) => setUnitPrice(e.target.value)}
           value={unitPrice}
         />
+      </div>
+      <div className="mb-5">
+        <p>Market Price: {company.price}</p>
       </div>
       <div>
         <button

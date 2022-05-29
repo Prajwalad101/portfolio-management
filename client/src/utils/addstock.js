@@ -7,6 +7,7 @@ export default async function addStock(
 ) {
   const stocksArr = stocks.map((stock) => stock.name);
 
+  // when buying the stock check if the stock already exists
   if (stocksArr.indexOf(stock.name) !== -1 && type === 'buy') {
     setIsValid(false);
     return;
