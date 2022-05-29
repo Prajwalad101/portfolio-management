@@ -8,19 +8,15 @@ Below is the step by step guide explaining how you can run the application into 
    ```
 3. Install dependencies
    The project folder contains a client and a server folder. To install the required dependencies, run the following command on both folders
+
    ```
    cd client
    npm install
-
    ```
 
    ```
-
    cd server
    npm install
-
-   ```
-
    ```
 
 4. Run the application
